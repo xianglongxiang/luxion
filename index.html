@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Luxion</title>
+<link rel="stylesheet" type="text/css" href="styles/reset.css">
+<style>
+	html,body{
+		width: 100%;
+		height: 100%;
+	}
+	.wrapper{
+		position: absolute;
+	    height: 631px;
+	    width: 1004px;
+	    opacity: 1;
+		background: url('http://olx2ojneu.bkt.clouddn.com/bookshelf.png') 400px 197px no-repeat; 
+	}
+	.wrap{
+		position: absolute;
+		width: 42px;
+		height: 144px;
+		top:300px;
+		background: url('http://olx2ojneu.bkt.clouddn.com/luxion_sprite.png') 0 0 no-repeat;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" class="wrapper">
+		<div id="wrap" class="wrap">
+			
+		</div>
+	</div>
+</body>
+<script>
+      //把每个div的left、top、width、height信息存在js数组里(一共155个)
+	   var coords = [
+            [300, 1, 340, 42, 144 ],
+            [300, 116, 340, 195, 144],
+            [300, 439, 324, 75, 144 ],
+            [300, 650, 322, 78, 144],
+            [300, 691, 302, 102, 144],
+            [300, 684, 286, 74, 144],
+            [300, 678, 268, 68, 144],
+            [300, 672, 270, 108, 144],
+            [300, 669, 270, 102, 144],
+            [300, 663, 270, 124, 144],
+            [300, 669, 270, 79, 144],
+            [300, 684, 270, 68, 144],
+            [300, 692, 270, 80, 144],
+            [300, 685, 270, 70, 144],
+            [300, 679, 268, 70, 144],
+            [300, 675, 270, 81, 144],
+            [300, 670, 270, 130, 144, 1],
+            [166, 669, 63, 162, 351],
+            [166, 669, 63, 136, 351],
+            [166, 670, 63, 173, 351],
+            [166, 586, 63, 255, 351],
+            [166, 586, 63, 255, 351],
+            [166, 586, 63, 251, 351],
+            [166, 418, 62, 419, 351],
+            [166, 418, 62, 467, 351],
+            [166, 418, 63, 467, 351, 1],
+            [83, 400, 15, 485, 399],
+            [83, 401, 15, 497, 399],
+            [83, 372, 15, 526, 399],
+            [83, 372, 15, 558, 399],
+            [83, 373, 15, 557, 399, 1],
+            [166, 403, 55, 527, 359],
+            [166, 404, 55, 528, 359],
+            [166, 404, 56, 503, 359],
+            [166, 404, 56, 503, 359],
+            [166, 404, 56, 502, 359, 1],
+            [166, 678, 295, 72, 180],
+            [166, 679, 294, 92, 180],
+            [166, 680, 294, 76, 180],
+            [166, 680, 295, 74, 180],
+            [166, 680, 295, 76, 180],
+            [166, 683, 290, 112, 180],
+            [166, 575, 294, 194, 180],
+            [83, 404, 294, 365, 180],
+            [83, 293, 294, 476, 180],
+            [83, 259, 293, 494, 180],
+            [83 , 212, 293, 543, 180, 1],
+            [166, 198, 300, 555, 191],
+            [166, 182, 301, 571, 191],
+            [166, 181, 301, 572, 191],
+            [166, 240, 300, 513, 191, 1 ],
+            [166, 240, 300, 513, 165],
+            [166, 241, 300, 513, 165],
+            [166, 246, 299, 508, 165],
+            [166, 245, 300, 508, 165],
+            [166, 242, 300, 511, 165, 1],
+            [166, 242, 301, 511, 165],
+            [166, 242, 301, 510, 165],
+            [166, 241, 301, 511, 165],
+            [166, 240, 301, 511, 165]
+        ];
+        var wrap = document.getElementById('wrap');
+        var repeatX = 0;
+        var repeatY = 0;
+        var rowHeight = 0;
+        var index = 0;
+        var draw = function(index){ 
+        	var arr = coords[index];
+        	wrap.style.left = arr[1] + "px";
+            wrap.style.top = arr[2] + "px";
+            wrap.style.width = arr[3] + "px";
+            wrap.style.height = arr[4] + "px";
+            wrap.style.background = "url('http://olx2ojneu.bkt.clouddn.com/luxion_sprite.png') no-repeat " + -repeatX + "px " + -repeatY + "px";
+
+            arr[4] > rowHeight && (rowHeight = arr[4]); //记录背景片段的高度(背景图所在行的高度)。
+            //如果有arr[4]，就表示开始调用背景图的下一行了，背景图的y坐标就需要 + 上一行的高度；背景x坐标当然要重置为0了，doodle.rowHeight当然也重置为0。
+            //如果没有arr[4]，表示还在调用同一行的背景图，那么只需要增加x坐标的位置就OK了。
+            arr[5] ? (repeatX = 0, repeatY += rowHeight, rowHeight = 0) : repeatX += arr[3];
+        }
+        var setInt = setInterval(function(){
+        	if(index >= coords.length){
+        		clearInterval(setInt);
+        		return;
+        	}
+        	draw(index);
+        	index++;
+        },200);
+</script>
+</html>
